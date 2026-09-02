@@ -1,0 +1,12 @@
+---
+interface Props {
+  title: string;
+  id: string;
+  cursor?: boolean;
+}
+const { title, id, cursor = false } = Astro.props;
+---
+
+<h2 class="section__head" id={id}>
+  {title}{cursor && <span class="cursor" aria-hidden="true"></span>}
+</h2>

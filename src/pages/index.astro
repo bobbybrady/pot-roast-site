@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import AsciiPot from '../components/AsciiPot.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ProjectEntry from '../components/ProjectEntry.astro';
+import { site, projects, cooking } from '../data/site.js';
+---
+
+<Base title={site.title} description={site.tagline}>
+  <div class="page">
+    <header class="hero">
+      <AsciiPot />
+      <h1 class="wordmark">{site.name}</h1>
+      <p class="tagline">{site.tagline}</p>
+      <p class="hero__secondary">{site.secondary}</p>
+    </header>
+
+    <main>
+      <section class="section" aria-labelledby="made">
+        <SectionHead id="made" title="Stuff we made" />
+        <ul class="entries">
+          {projects.map((project) => <ProjectEntry project={project} />)}
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="cooking">
+        <SectionHead id="cooking" title="Currently cooking:" cursor />
+        <ul class="entries">
+          {cooking.map((project) => <ProjectEntry project={project} />)}
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="oss">
+        <SectionHead id="oss" title="Open source" />
+        <p class="prose">
+          Some of our projects are open source. Take a look, contribute, or
+          build something with them.
+        </p>
+        <p class="actions">
+          <a class="link" href={site.github} rel="me">GITHUB</a>
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="about">
+        <SectionHead id="about" title={`About ${site.title}`} />
+        <p class="prose">
+          {site.title} makes games, apps, and open-source software. We like
+          useful tools and making things we want to use ourselves.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="hello">
+        <SectionHead id="hello" title="Say hello" />
+        <p class="prose">
+          Have a question, found a bug, or want to talk about something we&rsquo;re
+          making?
+        </p>
+        <p class="actions">
+          <a class="link" href={`mailto:${site.email}`}>EMAIL {site.name}</a>
+          <a class="link" href={site.github}>GITHUB</a>
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span><strong>{site.name}</strong></span>
+      <span>made on computers</span>
+      <span>&copy; {site.year}</span>
+      <button class="link theme-toggle" type="button" hidden>LIGHTS OUT</button>
+    </footer>
+  </div>
+</Base>

@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f4f1e6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14130d" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <script is:inline>
+      // Re-pin a saved theme before first paint so there is no flash.
+      // With no saved choice the page follows the OS via light-dark().
+      try {
+        var t = localStorage.getItem('pr-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#made">Skip to projects</a>
+    <slot />
+    <script is:inline>
+      // Progressive enhancement: the toggle ships hidden and only appears once
+      // this runs, so it is never a dead control.
+      (function () {
+        var btn = document.querySelector('.theme-toggle');
+        if (!btn) return;
+        var root = document.documentElement;
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function isDark() {
+          return root.dataset.theme ? root.dataset.theme === 'dark' : mq.matches;
+        }
+
+        function sync() {
+          var dark = isDark();
+          btn.textContent = dark ? 'LIGHTS ON' : 'LIGHTS OUT';
+          btn.setAttribute(
+            'aria-label',
+            dark ? 'Switch to light theme' : 'Switch to dark theme'
+          );
+        }
+
+        btn.hidden = false;
+        sync();
+        // Only fires while the visitor has not pinned a choice.
+        mq.addEventListener('change', sync);
+
+        btn.addEventListener('click', function () {
+          var next = isDark() ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try {
+            localStorage.setItem('pr-theme', next);
+          } catch (e) {}
+          sync();
+        });
+      })();
+    </script>
+  </body>
+</html>

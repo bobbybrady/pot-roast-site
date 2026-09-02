@@ -1,0 +1,397 @@
+/* ---------------------------------------------------------------
+   Pot Roast Co. — global styles
+   Monochrome, monospace, cream (inverted in dark mode).
+   No gradients, no radii, no shadows.
+   --------------------------------------------------------------- */
+
+:root {
+  /* Each token is declared twice on purpose: the plain value is the fallback
+     for browsers without light-dark(), the second declaration wins everywhere
+     else. Light value first, dark value second. */
+  --bg: #f4f1e6;
+  --bg: light-dark(#f4f1e6, #14130d);
+  --fg: #16150f;
+  --fg: light-dark(#16150f, #e8e4d6);
+  --muted: #6f6a5b;
+  --muted: light-dark(#6f6a5b, #8d8775);
+  --rule: #dcd6c6;
+  --rule: light-dark(#dcd6c6, #322f27);
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "DejaVu Sans Mono", "Liberation Mono", monospace;
+
+  --well: 44rem;
+  --gap-section: clamp(4rem, 11vw, 7rem);
+
+  color-scheme: light dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.65;
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* --- shell ---------------------------------------------------- */
+
+.page {
+  max-width: var(--well);
+  margin: 0 auto;
+  padding: clamp(3rem, 9vw, 6rem) clamp(1.25rem, 5vw, 2rem) 0;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 10;
+  padding: 0.5rem 0.75rem;
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* --- hero ----------------------------------------------------- */
+
+.hero {
+  text-align: center;
+  padding-bottom: var(--gap-section);
+}
+
+.pot {
+  margin: 0 0 1.75rem;
+  /* Sized so the pot, not the wordmark, is the dominant mark.
+     Leading stays open: the reference's walls are segmented too, and
+     tightening it collapses the lid knob into the lid. */
+  font-size: clamp(1.1rem, 5.2vw, 1.9rem);
+  line-height: 1.25;
+  letter-spacing: 0;
+  /* the art is drawn on a fixed column grid; keep it centred as a block */
+  display: inline-block;
+  text-align: left;
+}
+
+.steam {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* Faintest at the top, where the steam has had longest to disperse. */
+.steam[data-row="0"] {
+  opacity: 0.3;
+}
+.steam[data-row="1"] {
+  opacity: 0.5;
+}
+.steam[data-row="2"] {
+  opacity: 0.72;
+}
+
+.wordmark {
+  margin: 0;
+  /* Monospace + 0.26em tracking = ~0.86em of advance per character, so the
+     lockup needs `chars * 0.86 * font-size` of room. The 7.2vw middle term
+     keeps the current 13 characters on one line down to a 280px viewport.
+     Lengthen the name and this needs lowering. */
+  font-size: clamp(1.1rem, 6.2vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  /* letter-spacing adds a trailing gap; nudge back to true centre */
+  text-indent: 0.26em;
+  line-height: 1.1;
+}
+
+.tagline {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+}
+
+.hero__secondary {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* --- section heads -------------------------------------------- */
+
+.section {
+  padding-bottom: var(--gap-section);
+}
+
+.section__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 2.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.section__head::before {
+  content: "";
+  width: 1.5rem;
+  flex: none;
+  border-top: 1px solid var(--fg);
+}
+
+.section__head::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--rule);
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  margin-left: 0.1em;
+  border-bottom: 0.14em solid var(--fg);
+  animation: blink 1.15s step-end infinite;
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* --- project entries ------------------------------------------ */
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 10ch 1fr;
+  gap: 0 1.75rem;
+  padding: 1.75rem 0 1.75rem 1rem;
+  border-left: 1px solid transparent;
+  border-bottom: 1px solid var(--rule);
+  transition: border-left-color 120ms ease, padding-left 120ms ease;
+}
+
+.entry:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.entry:hover,
+.entry:focus-within {
+  border-left-color: var(--fg);
+  padding-left: 1.25rem;
+}
+
+.entry__glyph {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.15;
+  color: var(--fg);
+  transition: transform 140ms ease;
+}
+
+.entry:hover .entry__glyph,
+.entry:focus-within .entry__glyph {
+  transform: translateX(1ch);
+}
+
+.entry__name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 140ms ease;
+}
+
+.entry:hover .entry__name,
+.entry:focus-within .entry__name {
+  text-decoration-color: var(--fg);
+}
+
+.entry__labels {
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.75rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+.label::before {
+  content: "[ ";
+}
+.label::after {
+  content: " ]";
+}
+
+.entry__desc {
+  margin: 0.85rem 0 0;
+  font-size: 0.9rem;
+  max-width: 34rem;
+}
+
+.entry__links {
+  margin: 1rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+/* --- links ---------------------------------------------------- */
+
+a {
+  color: inherit;
+}
+
+.link {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  padding: 0.1rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background-color 120ms ease, color 120ms ease,
+    border-color 120ms ease;
+}
+
+.link::before {
+  content: "[ ";
+}
+.link::after {
+  content: " ]";
+}
+
+button.link {
+  font: inherit;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  color: inherit;
+  cursor: pointer;
+}
+
+.link:hover {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+/* --- prose sections ------------------------------------------- */
+
+.prose {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.95rem;
+}
+
+.prose + .actions {
+  margin-top: 1.75rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+}
+
+/* --- footer --------------------------------------------------- */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  padding: 2rem 0 3.5rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1.5rem;
+}
+
+.footer strong {
+  color: var(--fg);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+/* --- narrow --------------------------------------------------- */
+
+@media (max-width: 34rem) {
+  .entry {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .entry__glyph {
+    font-size: 0.72rem;
+  }
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .steam {
+    opacity: 0.5;
+  }
+}

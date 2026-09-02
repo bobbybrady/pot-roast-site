@@ -1,0 +1,61 @@
+---
+/*
+ * The Pot Roast Co. mark, traced from the reference sketch.
+ *
+ * Column grid — keep these or the pot comes apart:
+ *   body walls   cols 3 and 19      rim / base  cols 4 and 18
+ *   eyes         cols 8 and 14      smirk       cols 13-15 (right of centre)
+ *   lid          cols 5-17          knob        cols 9-13
+ *   steam        cols 7, 11, 15     everything centres on col 11
+ *
+ * Steam cells are two characters wide and hold either "( " or " )", so
+ * swapping the content shifts the glyph one column and the column appears to
+ * waver. Decorative: the wordmark carries the accessible name.
+ */
+const steam = [0, 1, 2]
+  .map((r) => {
+    const cells = [0, 1, 2]
+      .map(
+        (c) =>
+          `<span class="steam" data-row="${r}" data-col="${c}">` +
+          (r % 2 === 0 ? '( ' : ' )') +
+          '</span>'
+      )
+      .join('  ');
+    return '       ' + cells;
+  })
+  .join('\n');
+
+const body = [
+  '         _____',
+  '     ___|_____|___',
+  '    /-------------\\',
+  ' --|               |--',
+  '   |    .     .    |',
+  '   |         __/   |',
+  '    \\_____________/',
+].join('\n');
+---
+
+<pre class="pot" aria-hidden="true" set:html={`${steam}\n\n${body}`} />
+
+<script is:inline>
+  // Each steam column wavers on its own period, so the three drift in and out
+  // of step instead of pulsing in unison. Motion only — nothing else changes.
+  (function () {
+    var pot = document.querySelector('.pot');
+    if (!pot) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    [1000, 1400, 1200].forEach(function (period, col) {
+      var cells = pot.querySelectorAll('.steam[data-col="' + col + '"]');
+      var phase = 0;
+      setInterval(function () {
+        phase ^= 1;
+        for (var r = 0; r < cells.length; r++) {
+          cells[r].textContent = (r + phase) % 2 === 0 ? '( ' : ' )';
+        }
+      }, period);
+    });
+  })();
+</script>
