@@ -1,11 +1,8 @@
 /*
  * Everything editable on the site lives in this file.
  *
- * TODO before going live — placeholders marked `#` or noted below:
- *   - site.email            (currently a placeholder address)
- *   - Wishbone Party links  (play + repo)
- *   - Little Patch link
- *   - Yoga Magic link
+ * TODO before going live:
+ *   - site.email  (currently a placeholder address)
  */
 
 export const site = {
@@ -35,23 +32,11 @@ export const ascii = {
    |
  [___]`,
 
-  wishbone: String.raw`
- o     o
-  \   /
-   \_/
-    |`,
-
-  patch: String.raw`
-  , . ,
-  \|\|/
-   |||
- ~~~~~~~`,
-
-  book: String.raw`
-  __ __
- /  |  \
-|  ~|~  |
- \__|__/`,
+  gravy: String.raw`
+  ~  ~
+ ,-----.
+<       )
+ '-----'`,
 };
 
 /*
@@ -69,33 +54,15 @@ export const projects = [
     ],
   },
   {
-    name: 'Wishbone Party',
-    glyph: 'wishbone',
-    labels: ['GAME', 'SHIPPED'],
-    description: 'A tiny chaotic browser game about breaking wishbones at a party.',
+    name: 'Gravy',
+    glyph: 'gravy',
+    labels: ['OPEN SOURCE', 'SHIPPED'],
+    description: 'A tool for running coding agents on your own projects.',
     links: [
-      { label: 'PLAY', href: '#' },
-      { label: 'GITHUB', href: '#' },
+      { label: 'GITHUB', href: 'https://github.com/bobbybrady/gravy' },
     ],
   },
 ];
 
 /* Works in progress. Same shape as `projects`. */
-export const cooking = [
-  {
-    name: 'Little Patch',
-    glyph: 'patch',
-    labels: ['APP', 'BUILDING'],
-    platform: 'iPhone',
-    description: 'A tiny real-time garden that grows throughout the day.',
-    links: [],
-  },
-  {
-    name: 'Yoga Magic with Ms. Clare',
-    glyph: 'book',
-    labels: ['APP', 'BUILDING'],
-    platform: 'iPhone / iPad',
-    description: 'Animated watercolor storybooks that guide kids through yoga.',
-    links: [],
-  },
-];
+export const cooking = [];

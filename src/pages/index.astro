@@ -23,12 +23,16 @@ import { site, projects, cooking } from '../data/site.js';
         </ul>
       </section>
 
-      <section class="section" aria-labelledby="cooking">
-        <SectionHead id="cooking" title="Currently cooking:" cursor />
-        <ul class="entries">
-          {cooking.map((project) => <ProjectEntry project={project} />)}
-        </ul>
-      </section>
+      {
+        cooking.length > 0 && (
+          <section class="section" aria-labelledby="cooking">
+            <SectionHead id="cooking" title="Currently cooking:" cursor />
+            <ul class="entries">
+              {cooking.map((project) => <ProjectEntry project={project} />)}
+            </ul>
+          </section>
+        )
+      }
 
       <section class="section" aria-labelledby="oss">
         <SectionHead id="oss" title="Open source" />
