@@ -70,7 +70,6 @@ directory `dist`. For GitHub Pages on a project repo, set `site` and `base` in
 
 ## Placeholders still to replace
 
-- `site.email` — currently `hello@potroast.com`
 - Before merging, confirm Gravy's details with Bobby: GitHub URL
   `https://github.com/bobbybrady/gravy`, description “A tool for running coding
   agents on your own projects.”, and labels `OPEN SOURCE` / `SHIPPED`.

@@ -1,8 +1,5 @@
 /*
  * Everything editable on the site lives in this file.
- *
- * TODO before going live:
- *   - site.email  (currently a placeholder address)
  */
 
 export const site = {
@@ -12,7 +9,7 @@ export const site = {
   title: 'Pot Roast Co.',
   tagline: 'Games, apps, and open-source software.',
   secondary: 'We make things we want to exist.',
-  email: 'hello@potroast.com', // TODO: real address
+  email: 'hello@potroast.co',
   github: 'https://github.com/bobbybrady',
   year: 2026,
 };
