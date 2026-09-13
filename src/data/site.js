@@ -10,15 +10,15 @@ export const site = {
   tagline: 'Games, apps, and open-source software.',
   secondary: 'We make things we want to exist.',
   email: 'hello@potroast.co',
-  github: 'https://github.com/bobbybrady',
+  github: 'https://github.com/Pot-Roast-Co',
   year: 2026,
 };
 
 /*
  * ASCII glyph system.
  *
- * Each project references a glyph by key. Keep them small — 3 to 4 lines,
- * under ~10 columns — and align them in a monospace editor, since they are
+ * Each project references a compact glyph by key. Preserve spacing and
+ * line breaks, since glyphs are
  * rendered in a <pre>. They are decorative only (aria-hidden), so the project
  * still reads correctly without them.
  */
@@ -29,11 +29,14 @@ export const ascii = {
    |
  [___]`,
 
-  gravy: String.raw`
-  ~  ~
- ,-----.
-<       )
- '-----'`,
+  // Exact compact art supplied by the reviewer; preserve whitespace.
+  gravy: [
+    '   )',
+    '  ( ',
+    ' .----.',
+    '(______)__',
+    String.raw` \______/`,
+  ].join('\n'),
 };
 
 /*
@@ -44,7 +47,7 @@ export const projects = [
   {
     name: 'VS Code Flowers',
     glyph: 'flowerpot',
-    labels: ['OPEN SOURCE', 'SHIPPED'],
+    labels: ['OPEN SOURCE'],
     description: 'A calm little garden that grows inside VS Code.',
     links: [
       { label: 'GITHUB', href: 'https://github.com/bobbybrady/vs-code-flowers' },
@@ -53,7 +56,7 @@ export const projects = [
   {
     name: 'Gravy',
     glyph: 'gravy',
-    labels: ['OPEN SOURCE', 'SHIPPED'],
+    labels: ['OPEN SOURCE'],
     description: 'A tool for running coding agents on your own projects.',
     links: [
       { label: 'GITHUB', href: 'https://github.com/bobbybrady/gravy' },

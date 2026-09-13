@@ -35,8 +35,10 @@ glyph to `ascii` under a matching `glyph` key. Nothing else needs touching.
 }
 ```
 
-**Glyphs** are 3–4 lines, under ~10 columns, aligned in a monospace editor.
-They render inside `<pre>` and are `aria-hidden` — decorative only.
+**Glyphs** are ASCII illustrations displayed beside the project details on
+desktop and above them on mobile. Gravy uses the exact compact gravy boat supplied in review. Glyphs preserve spacing and line breaks inside `<pre>` and are
+`aria-hidden` — decorative only. Project names use the first link; any additional
+links appear below the description.
 
 The main pot lives in `src/components/AsciiPot.astro`. Its walls sit at columns
 3 and 14; keep them there or the lid and base will drift.

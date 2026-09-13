@@ -243,6 +243,9 @@ body {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+.entry__name a {
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
   text-decoration-color: transparent;
@@ -250,8 +253,8 @@ body {
   transition: text-decoration-color 140ms ease;
 }
 
-.entry:hover .entry__name,
-.entry:focus-within .entry__name {
+.entry__name a:hover,
+.entry__name a:focus-visible {
   text-decoration-color: var(--fg);
 }
 

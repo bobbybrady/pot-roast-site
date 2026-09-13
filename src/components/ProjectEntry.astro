@@ -12,22 +12,25 @@ interface Props {
   };
 }
 const { project } = Astro.props;
+const [primaryLink, ...secondaryLinks] = project.links;
 const art = ascii[project.glyph]?.replace(/^\n/, '') ?? '';
 ---
 
 <li class="entry">
   <pre class="entry__glyph" aria-hidden="true">{art}</pre>
   <div>
-    <h3 class="entry__name">{project.name}</h3>
+    <h3 class="entry__name">
+      {primaryLink ? <a href={primaryLink.href}>{project.name}</a> : project.name}
+    </h3>
     <p class="entry__labels">
       {project.labels.map((l) => <span class="label">{l}</span>)}
       {project.platform && <span>{project.platform}</span>}
     </p>
     <p class="entry__desc">{project.description}</p>
     {
-      project.links.length > 0 && (
+      secondaryLinks.length > 0 && (
         <p class="entry__links">
-          {project.links.map((link) => (
+          {secondaryLinks.map((link) => (
             <a class="link" href={link.href}>
               {link.label}
             </a>
