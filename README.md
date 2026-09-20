@@ -49,10 +49,10 @@ The palette follows the visitor's OS by default and can be pinned with the
 `[ LIGHTS OUT ]` / `[ LIGHTS ON ]` toggle in the footer, which persists to
 `localStorage` under `pr-theme`.
 
-All four colours are defined once in `src/styles/global.css` using
-`light-dark(light, dark)`. Each is declared twice — a plain fallback first for
-browsers without `light-dark()` (pre-2024), then the real one. To change a
-colour, edit both values on the `light-dark()` line.
+All four colours live in `src/styles/global.css`. The `light-dark()` values
+are guarded by `@supports`; browsers without support use plain colors with OS
+and pinned-theme overrides. To change a colour, update its `light-dark()`
+values and the corresponding plain fallback values.
 
 The toggle works by setting `data-theme="light" | "dark"` on `<html>`, which
 sets `color-scheme` and flips every `light-dark()` value at once. Two inline

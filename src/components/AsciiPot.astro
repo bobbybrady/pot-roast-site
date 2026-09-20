@@ -45,17 +45,27 @@ const body = [
   (function () {
     var pot = document.querySelector('.pot');
     if (!pot) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var timers = [];
 
-    [1000, 1400, 1200].forEach(function (period, col) {
-      var cells = pot.querySelectorAll('.steam[data-col="' + col + '"]');
-      var phase = 0;
-      setInterval(function () {
-        phase ^= 1;
-        for (var r = 0; r < cells.length; r++) {
-          cells[r].textContent = (r + phase) % 2 === 0 ? '( ' : ' )';
-        }
-      }, period);
-    });
+    function syncMotion() {
+      timers.forEach(function (timer) { clearInterval(timer); });
+      timers = [];
+      if (motion.matches) return;
+
+      [1000, 1400, 1200].forEach(function (period, col) {
+        var cells = pot.querySelectorAll('.steam[data-col="' + col + '"]');
+        var phase = 0;
+        timers.push(setInterval(function () {
+          phase ^= 1;
+          for (var r = 0; r < cells.length; r++) {
+            cells[r].textContent = (r + phase) % 2 === 0 ? '( ' : ' )';
+          }
+        }, period));
+      });
+    }
+
+    motion.addEventListener('change', syncMotion);
+    syncMotion();
   })();
 </script>

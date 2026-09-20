@@ -5,17 +5,11 @@
    --------------------------------------------------------------- */
 
 :root {
-  /* Each token is declared twice on purpose: the plain value is the fallback
-     for browsers without light-dark(), the second declaration wins everywhere
-     else. Light value first, dark value second. */
+  /* Plain colors remain valid in browsers without light-dark(). */
   --bg: #f4f1e6;
-  --bg: light-dark(#f4f1e6, #14130d);
   --fg: #16150f;
-  --fg: light-dark(#16150f, #e8e4d6);
   --muted: #6f6a5b;
-  --muted: light-dark(#6f6a5b, #8d8775);
   --rule: #dcd6c6;
-  --rule: light-dark(#dcd6c6, #322f27);
 
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "DejaVu Sans Mono", "Liberation Mono", monospace;
@@ -24,6 +18,33 @@
   --gap-section: clamp(4rem, 11vw, 7rem);
 
   color-scheme: light dark;
+}
+
+@supports (color: light-dark(white, black)) {
+  :root {
+    --bg: light-dark(#f4f1e6, #14130d);
+    --fg: light-dark(#16150f, #e8e4d6);
+    --muted: light-dark(#6f6a5b, #8d8775);
+    --rule: light-dark(#dcd6c6, #322f27);
+  }
+}
+
+@supports not (color: light-dark(white, black)) {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14130d;
+      --fg: #e8e4d6;
+      --muted: #8d8775;
+      --rule: #322f27;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #14130d;
+    --fg: #e8e4d6;
+    --muted: #8d8775;
+    --rule: #322f27;
+  }
 }
 
 :root[data-theme="light"] {
