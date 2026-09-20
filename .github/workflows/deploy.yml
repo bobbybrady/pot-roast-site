@@ -1,0 +1,55 @@
+# Build the Astro site and publish it to GitHub Pages.
+#
+# Pages serves whatever this workflow uploads, so the built site is the deployment: there is no
+# separate step that could be forgotten and no server holding a stale copy.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  # So a deploy can be re-run without an empty commit — useful when the fix was a DNS record
+  # rather than anything in here.
+  workflow_dispatch:
+
+# Pages needs to mint an id-token to deploy, and read the repository to build it.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time, and never cancel one midway: a half-finished upload is a broken site,
+# which is worse than a slightly stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+
+      # npm ci, not npm install: it installs exactly what the lockfile says, so a deploy
+      # cannot quietly pick up a different dependency from the one that was tested.
+      - run: npm ci
+
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
